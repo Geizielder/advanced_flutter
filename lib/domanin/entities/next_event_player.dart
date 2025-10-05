@@ -17,6 +17,7 @@ class NextEventPlayer {
   }) {
     initials = _getInitiasl();
   }
+  
   String _getInitiasl() {
     final names = name.toUpperCase().trim().split(' ');
     final firstChar = names.first.split('').firstOrNull ?? '-';
