@@ -21,7 +21,7 @@ class NextEventPlayer {
   }
   String _getInitiasl() {
     final names = name.toUpperCase().split(' ');
-    final firstChar = names.first[0];
+    final firstChar = names.first.split('').firstOrNull ?? '-';
     final lastChar = names.last.split('').elementAtOrNull(names.length == 1 ? 1 : 0) ?? '';
     return '$firstChar$lastChar';
   }
@@ -39,10 +39,12 @@ void main() {
     expect(initialsOf('Rhuan'), 'RH');
     expect(initialsOf('R'), 'R');
   });
+  test('should return "-" when name is empty', () {
+    expect(initialsOf(''), '-');
+  });
     test('should convart to uppercase', () {
     expect(initialsOf('rhuan cordeiro'), 'RC');
     expect(initialsOf('rhuan'), 'RH');
     expect(initialsOf('r'), 'R');
-
   });
 }
