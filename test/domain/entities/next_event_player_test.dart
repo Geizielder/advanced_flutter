@@ -17,12 +17,12 @@ class NextEventPlayer {
     this.position,
     this.confirmationDate,
   }) {
-    initials = getInitiasl();
+    initials = _getInitiasl();
   }
-  String getInitiasl() {
+  String _getInitiasl() {
     final names = name.split(' ');
     final firstChar = names.first[0];
-    final lastChar = names.last[0];
+    final lastChar = names.last[names.length == 1 ? 1 : 0];
     return '$firstChar$lastChar';
   }
 }
@@ -34,5 +34,8 @@ void main() {
     expect(initialsOf('Geizielder Cordeiro'), 'GC');
     expect(initialsOf('Rhuan Cordeiro'), 'RC');
     expect(initialsOf('Giselle Cordeiro Gervazio'), 'GG');
+  });
+    test('should return the first and second letter of the first names', () {
+    expect(initialsOf('Rhuan'), 'Rh');
   });
 }
