@@ -20,7 +20,7 @@ class NextEventPlayer {
     initials = _getInitiasl();
   }
   String _getInitiasl() {
-    final names = name.toUpperCase().split(' ');
+    final names = name.toUpperCase().trim().split(' ');
     final firstChar = names.first.split('').firstOrNull ?? '-';
     final lastChar = names.last.split('').elementAtOrNull(names.length == 1 ? 1 : 0) ?? '';
     return '$firstChar$lastChar';
@@ -42,9 +42,17 @@ void main() {
   test('should return "-" when name is empty', () {
     expect(initialsOf(''), '-');
   });
-    test('should convart to uppercase', () {
+  test('should convart to uppercase', () {
     expect(initialsOf('rhuan cordeiro'), 'RC');
     expect(initialsOf('rhuan'), 'RH');
     expect(initialsOf('r'), 'R');
+  });
+  test('should ignore extra whitespaces', () {
+    expect(initialsOf('Rhuan Cordeiro '), 'RC');
+    expect(initialsOf(' Rhuan Cordeiro'), 'RC');
+    expect(initialsOf(' Rhuan Cordeiro '), 'RC');
+    expect(initialsOf(' Rhuan  Cordeiro '), 'RC');
+    expect(initialsOf(' R huan  Cordeiro '), 'RC');
+    expect(initialsOf(' Rhuan C Araujo'), 'RA');
   });
 }
