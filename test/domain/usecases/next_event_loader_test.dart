@@ -32,7 +32,7 @@ abstract class LoadNextEventRepository {
     Future<NextEvent> loadNextEvent({ required String groupId});
 }
 
-class LoadNextEvenMocktRepository implements LoadNextEventRepository{
+class LoadNextEventSpyRepository implements LoadNextEventRepository{
   String? groupId;
   var callsCaount = 0;
   NextEvent? output;
@@ -48,12 +48,12 @@ class LoadNextEvenMocktRepository implements LoadNextEventRepository{
 void main() {
 
     late String groupId;
-    late LoadNextEvenMocktRepository repo;
+    late LoadNextEventSpyRepository repo;
     late NextEventLoader sut;
 
   setUp(() {
     groupId = Random().nextInt(50000).toString();
-    repo = LoadNextEvenMocktRepository();
+    repo = LoadNextEventSpyRepository();
     repo.output = NextEvent(
       groupName: 'any_groupName',
       date: DateTime.now(),
