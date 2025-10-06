@@ -1,8 +1,9 @@
 import 'dart:math';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'package:advanced_flutter/domanin/entities/next_event.dart';
 import 'package:advanced_flutter/domanin/entities/next_event_player.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:advanced_flutter/domanin/repositories/load_next_event_repo.dart';
 class NextEventLoader {
   final LoadNextEventRepository repo;
 
@@ -15,11 +16,6 @@ class NextEventLoader {
   }
 
 }
-
-abstract class LoadNextEventRepository {
-    Future<NextEvent> loadNextEvent({ required String groupId});
-}
-
 class LoadNextEventSpyRepository implements LoadNextEventRepository{
   String? groupId;
   var callsCaount = 0;
@@ -55,15 +51,14 @@ void main() {
           isConfirmerd: true,
           photo: 'any photo 1',
           confirmationDate: DateTime.now()
-          ),
+        ),
         NextEventPlayer(
           id: 'any id 2',
           name: 'Giselle Cordeiro',
           isConfirmerd: false,
           position: 'any position 2',
           confirmationDate: DateTime.now()
-          ),
-
+        ),
       ]
       );
     sut = NextEventLoader(repo: repo);
