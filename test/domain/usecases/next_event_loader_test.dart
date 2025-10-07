@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:advanced_flutter/domanin/usecase/next_event_loader.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -6,30 +5,30 @@ import 'package:advanced_flutter/domanin/entities/next_event.dart';
 import 'package:advanced_flutter/domanin/entities/next_event_player.dart';
 import 'package:advanced_flutter/domanin/repositories/load_next_event_repo.dart';
 
-class LoadNextEventSpyRepository implements LoadNextEventRepository{
+import '../../helpers/fake.dart';
+
+class LoadNextEventSpyRepository implements LoadNextEventRepository {
   String? groupId;
   var callsCaount = 0;
   NextEvent? output;
   Error? error;
 
   @override
-  Future<NextEvent> loadNextEvent({ required String groupId}) async {
+  Future<NextEvent> loadNextEvent({required String groupId}) async {
     this.groupId = groupId;
     callsCaount++;
-    if(error != null) throw error!;
+    if (error != null) throw error!;
     return output!;
-
   }
 }
 
 void main() {
-
-    late String groupId;
-    late LoadNextEventSpyRepository repo;
-    late NextEventLoader sut;
+  late String groupId;
+  late LoadNextEventSpyRepository repo;
+  late NextEventLoader sut;
 
   setUp(() {
-    groupId = Random().nextInt(50000).toString();
+    groupId = anyString();
     repo = LoadNextEventSpyRepository();
     repo.output = NextEvent(
       groupName: 'any_groupName',
@@ -40,17 +39,17 @@ void main() {
           name: 'Rhuan Cordeiro',
           isConfirmerd: true,
           photo: 'any photo 1',
-          confirmationDate: DateTime.now()
+          confirmationDate: DateTime.now(),
         ),
         NextEventPlayer(
           id: 'any id 2',
           name: 'Giselle Cordeiro',
           isConfirmerd: false,
           position: 'any position 2',
-          confirmationDate: DateTime.now()
+          confirmationDate: DateTime.now(),
         ),
-      ]
-      );
+      ],
+    );
     sut = NextEventLoader(repo: repo);
   });
   test('should load event data from a repositoty', () async {
@@ -69,13 +68,19 @@ void main() {
     expect(event.players[0].initials, isNotEmpty);
     expect(event.players[0].photo, repo.output?.players[0].photo);
     expect(event.players[0].isConfirmerd, repo.output?.players[0].isConfirmerd);
-    expect(event.players[0].confirmationDate, repo.output?.players[0].confirmationDate);
+    expect(
+      event.players[0].confirmationDate,
+      repo.output?.players[0].confirmationDate,
+    );
     expect(event.players[1].id, repo.output?.players[1].id);
     expect(event.players[1].name, repo.output?.players[1].name);
     expect(event.players[1].initials, isNotEmpty);
     expect(event.players[1].position, repo.output?.players[1].position);
     expect(event.players[1].isConfirmerd, repo.output?.players[1].isConfirmerd);
-    expect(event.players[1].confirmationDate, repo.output?.players[1].confirmationDate);
+    expect(
+      event.players[1].confirmationDate,
+      repo.output?.players[1].confirmationDate,
+    );
   });
 
   test('should rethrow on error', () async {
