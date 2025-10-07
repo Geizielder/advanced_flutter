@@ -15,7 +15,11 @@ class LoadNextEventHttpRepository {
 
   Future<void> loadNextEvent({required String groupId}) async {
     final uri = Uri.parse(url.replaceFirst(':groupId', groupId));
-    await httpClient.get(uri);
+    final headers = {
+      'content-type': 'application/json',
+      'accept': 'application/json',
+    };
+    await httpClient.get(uri, headers: headers);
   }
 }
 
@@ -23,6 +27,7 @@ class HttpClientSpy implements Client {
   String? method;
   String? url;
   int callCount = 0;
+  Map<String, String>? headers;
 
   @override
   void close() {}
@@ -42,6 +47,7 @@ class HttpClientSpy implements Client {
     method = 'get';
     callCount++;
     this.url = url.toString();
+    this.headers = headers;
     return Response('', 200);
   }
 
@@ -105,22 +111,30 @@ void main() {
   setUpAll(() {
     url = 'https://dominio.com/api/groups/:groupId/next_event';
   });
+
   setUp(() {
     groupId = anyString();
     httpClient = HttpClientSpy();
     sut = LoadNextEventHttpRepository(httpClient: httpClient, url: url);
   });
+
   test('should request with correct method', () async {
     await sut.loadNextEvent(groupId: groupId);
     expect(httpClient.method, 'get');
     expect(httpClient.callCount, 1);
   });
 
-  test('should request with corrcet url', () async {
+  test('should request with correct url', () async {
     await sut.loadNextEvent(groupId: groupId);
     expect(
       httpClient.url,
       'https://dominio.com/api/groups/$groupId/next_event',
     );
+  });
+
+  test('should request with correct headers', () async {
+    await sut.loadNextEvent(groupId: groupId);
+    expect(httpClient.headers?['content-type'], 'application/json');
+    expect(httpClient.headers?['accept'], 'application/json');
   });
 }
