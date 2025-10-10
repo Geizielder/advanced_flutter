@@ -64,6 +64,12 @@ class HttpClientSpy implements Client {
   String responseJson = '';
   int statusCode = 200;
 
+  void simulateBadRequestError() => statusCode = 400;
+  void simulateUnauthorizedError() => statusCode = 401;
+  void simulateForBirddenError() => statusCode = 403;
+  void simulateNotFoundError() => statusCode = 404;
+  void simulateServeError() => statusCode = 500;
+
   @override
   void close() {}
 
@@ -211,31 +217,31 @@ void main() {
   });
 
   test('should throw UnexpectedError on 400', () async {
-    httpClient.statusCode = 400;
+    httpClient.simulateBadRequestError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
 
   test('should throw SessionExpiredError on 401', () async {
-    httpClient.statusCode = 401;
+    httpClient.simulateUnauthorizedError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.sessionExpired));
   });
 
   test('should throw UnexpectedError on 403', () async {
-    httpClient.statusCode = 403;
+    httpClient.simulateForBirddenError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
 
   test('should throw UnexpectedError on 404', () async {
-    httpClient.statusCode = 404;
+    httpClient.simulateNotFoundError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
 
   test('should throw UnexpectedError on 500', () async {
-    httpClient.statusCode = 500;
+    httpClient.simulateServeError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
