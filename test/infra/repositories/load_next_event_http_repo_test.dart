@@ -66,9 +66,9 @@ class HttpClientSpy implements Client {
 
   void simulateBadRequestError() => statusCode = 400;
   void simulateUnauthorizedError() => statusCode = 401;
-  void simulateForBirddenError() => statusCode = 403;
+  void simulateForbiddenError() => statusCode = 403;
   void simulateNotFoundError() => statusCode = 404;
-  void simulateServeError() => statusCode = 500;
+  void simulateServerError() => statusCode = 500;
 
   @override
   void close() {}
@@ -229,7 +229,7 @@ void main() {
   });
 
   test('should throw UnexpectedError on 403', () async {
-    httpClient.simulateForBirddenError();
+    httpClient.simulateForbiddenError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -241,7 +241,7 @@ void main() {
   });
 
   test('should throw UnexpectedError on 500', () async {
-    httpClient.simulateServeError();
+    httpClient.simulateServerError();
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
   });
