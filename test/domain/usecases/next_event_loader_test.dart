@@ -37,14 +37,14 @@ void main() {
         NextEventPlayer(
           id: 'any id 1',
           name: 'Rhuan Cordeiro',
-          isConfirmerd: true,
+          isConfirmed: true,
           photo: 'any photo 1',
           confirmationDate: DateTime.now(),
         ),
         NextEventPlayer(
           id: 'any id 2',
           name: 'Giselle Cordeiro',
-          isConfirmerd: false,
+          isConfirmed: false,
           position: 'any position 2',
           confirmationDate: DateTime.now(),
         ),
@@ -67,7 +67,7 @@ void main() {
     expect(event.players[0].name, repo.output?.players[0].name);
     expect(event.players[0].initials, isNotEmpty);
     expect(event.players[0].photo, repo.output?.players[0].photo);
-    expect(event.players[0].isConfirmerd, repo.output?.players[0].isConfirmerd);
+    expect(event.players[0].isConfirmed, repo.output?.players[0].isConfirmed);
     expect(
       event.players[0].confirmationDate,
       repo.output?.players[0].confirmationDate,
@@ -76,7 +76,7 @@ void main() {
     expect(event.players[1].name, repo.output?.players[1].name);
     expect(event.players[1].initials, isNotEmpty);
     expect(event.players[1].position, repo.output?.players[1].position);
-    expect(event.players[1].isConfirmerd, repo.output?.players[1].isConfirmerd);
+    expect(event.players[1].isConfirmed, repo.output?.players[1].isConfirmed);
     expect(
       event.players[1].confirmationDate,
       repo.output?.players[1].confirmationDate,

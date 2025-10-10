@@ -3,7 +3,8 @@ import 'package:advanced_flutter/domanin/entities/next_event_player.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  String initialsOf(String name) => NextEventPlayer( id: '',name: name,isConfirmerd: true,).initials;
+  String initialsOf(String name) =>
+      NextEventPlayer(id: '', name: name, isConfirmed: true).initials;
 
   test('should return the first letter of the first and last names', () {
     expect(initialsOf('Geizielder Cordeiro'), 'GC');
@@ -19,7 +20,7 @@ void main() {
   test('should return "-" when name is empty', () {
     expect(initialsOf(''), '-');
   });
-  
+
   test('should convart to uppercase', () {
     expect(initialsOf('rhuan cordeiro'), 'RC');
     expect(initialsOf('rhuan'), 'RH');
