@@ -14,3 +14,10 @@
   - Se o nome estuiver vazio, mostrar um hífem (-) nas inicias
   - Ignorar espaçoes em branco, no final do iniciao ou entre os nomes
   - Sempre mostrar as iniciais maiúsculo
+
+  # API
+  - GET para rota https://dominio.com/api/groups/:groupId/next_event
+  - Enviar headers "content-type" e "accesp", ambos com valor "application/json"
+  - Retornar Unexpeted Error em caso de 400, 403, 404 e 500 não necessita explicar para o cliente
+  - Retornar Session Expired Error em caso de 401
+  - Retornar dados do evento em caso de 200
